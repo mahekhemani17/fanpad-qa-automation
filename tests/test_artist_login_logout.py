@@ -2,21 +2,21 @@ import pytest
 from playwright.sync_api import sync_playwright
 from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
-from data.test_data import ARTIST
+from data.test_data import ARTIST1
 
 def test_artist_login_and_logout():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
 
-        login_page = LoginPage(page, ARTIST["base_url"])
-        dashboard_page = DashboardPage(page, ARTIST["base_url"])
+        login_page = LoginPage(page, ARTIST1["base_url"])
+        dashboard_page = DashboardPage(page, ARTIST1["base_url"])
 
         # Step 1 - go to login page
         login_page.goto()
 
         # Step 2 - log in
-        login_page.login(ARTIST["email"], ARTIST["password"])
+        login_page.login(ARTIST1["email"], ARTIST1["password"])
 
         # Step 3 - confirm dashboard loaded
         dashboard_page.assert_loaded()
