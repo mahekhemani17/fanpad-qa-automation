@@ -11,6 +11,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def test_fanclub_fan_onboarding():
+    # Cleanup before test so we always start fresh
+    delete_test_fan()
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False, slow_mo=1000)
         page = browser.new_page()
@@ -52,6 +55,3 @@ def test_fanclub_fan_onboarding():
         print("✓ Welcome to the club page confirmed")
 
         browser.close()
-
-    # Step 7 - cleanup: delete test fan so next run starts fresh
-    delete_test_fan()

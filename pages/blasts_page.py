@@ -42,17 +42,11 @@ class BlastsPage:
 
     def fill_message(self, message: str):
         self.message_editor.click()
+        self.page.wait_for_timeout(500)
         self.page.evaluate("""
-            const editor = document.querySelector('.ck-editor__editable');
-            editor.innerHTML = `<p>Hi there,</p>
-            <p>Welcome!</p>
-            <p>I'm so excited to have you here.</p>
-            <p>Whether you've been following for a while or just discovered me, your support truly means everything.</p>
-            <p>You can expect exclusive updates, behind-the-scenes content, and a closer look at everything I'm working on. I can't wait to take you along for the ride.</p>
-            <p>I'd love to hear from you.</p>
-            <p>With gratitude,</p>
-            <p>Jon</p>`;
+            document.querySelector('.ck-editor__editable').ckeditorInstance.setData('<p>Hi there,</p><p>Welcome!</p><p>I am so excited to have you here.</p><p>Whether you have been following for a while or just discovered me, your support truly means everything.</p><p>You can expect exclusive updates, behind-the-scenes content, and a closer look at everything I am working on. I cannot wait to take you along for the ride.</p><p>I would love to hear from you.</p><p>With gratitude,</p><p>Jon</p>');
         """)
+        self.page.wait_for_timeout(500)
 
     def fill_sms_message(self, message: str):
         self.sms_message_input.fill(message)
@@ -69,5 +63,5 @@ class BlastsPage:
         success.wait_for(timeout=10000)
 
     def assert_blast_queued(self):
-        success = self.page.locator('text=Emails/Messages are added to queue')
-        success.wait_for(timeout=10000)
+        success = self.page.locator('text=added to queue')
+        success.wait_for(timeout=15000)

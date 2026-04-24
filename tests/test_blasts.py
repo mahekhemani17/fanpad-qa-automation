@@ -98,7 +98,7 @@ def test_real_email_blast():
 
         blasts_page.select_email()
         blasts_page.fill_subject("Welcome to the Journey")
-        blasts_page.fill_message("placeholder")
+        blasts_page.fill_message("ignored")
         blasts_page.send_real()
         blasts_page.assert_blast_queued()
         print("✓ Real email blast queued successfully")

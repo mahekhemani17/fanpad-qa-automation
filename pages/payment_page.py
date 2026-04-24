@@ -13,7 +13,7 @@ class PaymentPage:
         self.continue_button.click()
 
     def complete_stripe_payment(self, card: str, expiry: str, cvv: str):
-        self.page.wait_for_load_state('networkidle', timeout=30000)
+        self.page.wait_for_load_state('load', timeout=30000)
         
         # Uncheck "Save my information for faster checkout"
         save_checkbox = self.page.locator('input[type="checkbox"]')
