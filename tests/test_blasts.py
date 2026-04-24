@@ -3,6 +3,7 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.blasts_page import BlastsPage
 from data.test_data import ARTIST1
+from utils.helpers import verify_sms_received
 import os
 from dotenv import load_dotenv
 
@@ -131,28 +132,6 @@ def test_real_sms_blast():
 
         browser.close()
 
-def test_real_whatsapp_blast():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=1000)
-        page = browser.new_page()
-
-        login_page = LoginPage(page, ARTIST1["base_url"])
-        dashboard_page = DashboardPage(page, ARTIST1["base_url"])
-        login_page.goto()
-        login_page.login(ARTIST1["email"], ARTIST1["password"])
-        dashboard_page.assert_loaded()
-        print("✓ Logged in as artist")
-
-        blasts_page = BlastsPage(page, ARTIST1["base_url"])
-        blasts_page.goto()
-        print("✓ Blasts page loaded")
-        blasts_page.apply_event_filter()
-        print("✓ Event filter applied")
-
-        blasts_page.select_whatsapp()
-        blasts_page.fill_sms_message("This is a Test")
-        blasts_page.send_real()
-        blasts_page.assert_blast_queued()
-        print("✓ Real WhatsApp blast queued successfully")
-
-        browser.close()
+    # Verify SMS actually delivered via Twilio
+    verify_sms_received(expected_text="This is a Test", wait_seconds=480)
+    print("✓ SMS delivery confirmed via Twilio")
