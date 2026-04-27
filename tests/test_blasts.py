@@ -3,7 +3,7 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.blasts_page import BlastsPage
 from data.test_data import ARTIST1
-from utils.helpers import verify_sms_received
+from utils.helpers import verify_sms_received, verify_email_received
 import os
 from dotenv import load_dotenv
 
@@ -105,6 +105,10 @@ def test_real_email_blast():
         print("✓ Real email blast queued successfully")
 
         browser.close()
+
+    # Verify email actually delivered via Mailgun
+    verify_email_received(expected_subject="Welcome to the Journey", wait_seconds=480)
+    print("✓ Email delivery confirmed via Mailgun")
 
 def test_real_sms_blast():
     with sync_playwright() as p:
