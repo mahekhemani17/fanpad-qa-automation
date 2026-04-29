@@ -14,12 +14,15 @@ class PaymentPage:
 
     def complete_stripe_payment(self, card: str, expiry: str, cvv: str):
         self.page.wait_for_load_state('load', timeout=30000)
-        
-        # Uncheck "Save my information for faster checkout"
-        save_checkbox = self.page.locator('input[type="checkbox"]')
-        if save_checkbox.is_checked():
-            save_checkbox.click()
-        
+
+        # Uncheck "Save my information" if it exists
+        try:
+            save_label = self.page.locator('label:has-text("Save my information")')
+            save_label.wait_for(timeout=5000)
+            save_label.click()
+        except:
+            pass
+
         self.page.locator('#cardNumber').fill(card)
         self.page.locator('#cardExpiry').fill(expiry)
         self.page.locator('#cardCvc').fill(cvv)

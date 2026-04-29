@@ -16,7 +16,8 @@ def test_fanclub_fan_onboarding():
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False, slow_mo=1000)
-        page = browser.new_page()
+        context = browser.new_context()
+        page = context.new_page()
 
         fanclub_url = os.getenv("FANCLUB_URL")
 
