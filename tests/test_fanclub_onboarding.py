@@ -30,9 +30,10 @@ def test_fanclub_fan_onboarding():
         entry_page.submit_phone()
         print("✓ Phone submitted")
 
-        # Step 3 - enter OTP
+        # Step 3 - get OTP from Twilio and enter it
         otp_page = OTPPage(page)
-        otp_page.enter_otp(FAN["otp"])
+        otp = otp_page.get_otp_from_twilio()
+        otp_page.enter_otp(otp)
         otp_page.verify()
         print("✓ OTP verified")
 

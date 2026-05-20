@@ -24,7 +24,7 @@ class BlastsPage:
         self.filter_button.click()
         self.page.locator('button[data-bs-target="#collapseSeven"]').click()
         self.page.wait_for_selector('#ddlArtistEvent', state='visible', timeout=10000)
-        self.event_dropdown.select_option(label="Source testing the data | HGyderabd | 2026-05-07")
+        self.event_dropdown.select_option(label="Automation Testing | Virtual | 2026-12-31")
         self.search_button.click()
         self.apply_button.click()
 

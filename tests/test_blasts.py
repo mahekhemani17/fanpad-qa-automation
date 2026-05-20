@@ -107,7 +107,7 @@ def test_real_email_blast():
         browser.close()
 
     # Verify email actually delivered via Mailgun
-    verify_email_received(expected_subject="Welcome to the Journey", wait_seconds=480)
+    verify_email_received(expected_subject="Welcome to the Journey", max_wait=900)
     print("✓ Email delivery confirmed via Mailgun")
 
 def test_real_sms_blast():
@@ -137,5 +137,5 @@ def test_real_sms_blast():
         browser.close()
 
     # Verify SMS actually delivered via Twilio
-    verify_sms_received(expected_text="This is a Test", wait_seconds=480)
+    verify_sms_received(expected_text="This is a Test", max_wait=480)
     print("✓ SMS delivery confirmed via Twilio")

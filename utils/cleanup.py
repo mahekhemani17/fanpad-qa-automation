@@ -16,15 +16,15 @@ def delete_test_fan():
         )
         cursor = conn.cursor()
         phone = os.getenv("TWILIO_PHONE_NUMBER")
+        artist_id = int(os.getenv("QA_ARTIST_ID", 92))
         
-        for artist_id in [1, 92, 94]:
-            cursor.execute(
-                'SELECT public."SP_QAAuto_DeleteFan_By_PhoneNumber"(%s, %s)',
-                (phone, artist_id)
-            )
+        cursor.execute(
+            'SELECT public."SP_QAAuto_DeleteFan_By_PhoneNumber"(%s, %s)',
+            (phone, artist_id)
+        )
         
         conn.commit()
-        print(f"✓ Test fan deleted for phone {phone} across all artist IDs")
+        print(f"✓ Test fan deleted for phone {phone} under artist ID {artist_id}")
     except Exception as e:
         print(f"✗ Cleanup failed: {e}")
     finally:

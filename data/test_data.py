@@ -12,7 +12,6 @@ ARTIST1 = {
 
 FAN = {
     "phone": os.getenv("TWILIO_PHONE_NUMBER"),
-    "otp": "000000",
     "username": f"testfan{int(time.time())}",
     "first_name": "Test",
     "email": os.getenv("TEST_EMAIL"),
