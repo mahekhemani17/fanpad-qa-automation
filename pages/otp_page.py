@@ -30,8 +30,9 @@ class OTPPage:
             recent = [m for m in messages if m.date_sent and m.date_sent > request_time]
             
             if recent:
+                print(f"SMS body: '{recent[0].body}'")
                 otp = ''.join(filter(str.isdigit, recent[0].body))[:6]
-                print(f"✓ OTP received: {otp}")
+                print(f"✓ OTP extracted: '{otp}'")
                 return otp
             
             wait = min(wait * 2, max_wait - total_waited)
