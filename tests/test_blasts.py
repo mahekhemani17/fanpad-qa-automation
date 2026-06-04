@@ -137,5 +137,5 @@ def test_real_sms_blast():
         browser.close()
 
     # Verify SMS actually delivered via Twilio
-    verify_sms_received(expected_text="This is a Test", max_wait=480)
+    verify_sms_received(expected_text="This is a Test", max_wait=600)
     print("✓ SMS delivery confirmed via Twilio")
