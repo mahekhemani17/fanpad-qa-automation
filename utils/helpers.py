@@ -47,6 +47,7 @@ def verify_email_received(expected_subject: str = None, max_wait: int = 480):
     
     raise AssertionError(f"✗ No email delivered to {recipient} within {max_wait}s")
 
+
 def verify_sms_received(expected_text: str = None, max_wait: int = 480):
     print(f"Checking for SMS delivery (max {max_wait}s with exponential backoff)...")
     request_time = datetime.now(timezone.utc)
@@ -78,3 +79,51 @@ def verify_sms_received(expected_text: str = None, max_wait: int = 480):
         wait = min(wait * 2, max_wait - total_waited)
     
     raise AssertionError(f"✗ No SMS received within {max_wait}s")
+
+
+def send_completion_email(passed: int, failed: int, duration: str, failed_tests: list = []):
+    api_key = os.getenv("MAILGUN_API_KEY")
+    domain = os.getenv("MAILGUN_DOMAIN")
+    base_url = os.getenv("MAILGUN_BASE_URL")
+    auth = b64encode(f"api:{api_key}".encode()).decode()
+    
+    status = "ALL PASSED" if failed == 0 else f"{failed} FAILED"
+    
+    failed_section = ""
+    if failed_tests:
+        failed_section = "\nFailed Tests:\n" + "\n".join(f"  - {t}" for t in failed_tests)
+    
+    recipients = [
+        "mahek.hemani@gmail.com",
+        "abhishek@vennhp.com",
+        "maulin@fanpad.xyz",
+        "Vekariya.J@vennhp.com",
+        "sudip@fanpad.xyz"
+    ]
+    
+    response = requests.post(
+        f"{base_url}/{domain}/messages",
+        headers={"Authorization": f"Basic {auth}"},
+        data={
+            "from": "FanPad QA Automation <team@fanpad.net>",
+            "to": recipients,
+            "subject": f"FanPad QA Automation Run Complete — {status}",
+            "text": f"""QA Automation Run Complete
+
+Status: {status}
+Tests Passed: {passed}
+Tests Failed: {failed}
+Duration: {duration}{failed_section}
+
+Environment: QA
+Timestamp: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
+
+View full results in the terminal logs.
+"""
+        }
+    )
+    
+    if response.status_code == 200:
+        print(f"✓ Completion email sent to team")
+    else:
+        print(f"✗ Failed to send completion email: {response.status_code}")
