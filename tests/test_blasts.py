@@ -11,7 +11,7 @@ load_dotenv()
 
 def test_email_blast():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         login_page = LoginPage(page, ARTIST1["base_url"])
@@ -35,7 +35,7 @@ def test_email_blast():
 
 def test_sms_blast():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         login_page = LoginPage(page, ARTIST1["base_url"])
@@ -58,7 +58,7 @@ def test_sms_blast():
 
 def test_whatsapp_blast():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         login_page = LoginPage(page, ARTIST1["base_url"])
@@ -81,7 +81,7 @@ def test_whatsapp_blast():
 
 def test_real_email_blast():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         login_page = LoginPage(page, ARTIST1["base_url"])
@@ -112,7 +112,7 @@ def test_real_email_blast():
 
 def test_real_sms_blast():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         login_page = LoginPage(page, ARTIST1["base_url"])

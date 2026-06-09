@@ -6,7 +6,7 @@ from data.test_data import ARTIST1
 
 def test_artist_login_and_logout():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
         login_page = LoginPage(page, ARTIST1["base_url"])
